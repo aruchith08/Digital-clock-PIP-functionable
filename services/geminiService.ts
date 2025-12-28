@@ -1,13 +1,12 @@
 import { GoogleGenAI } from "@google/genai";
 
-// Initialize Gemini AI
-// Note: In a real production app, you might want to proxy this through a backend
-// to avoid exposing the key if not using a secure environment variable injection.
-// For this frontend-only demo, we assume the environment is secure or user-provided.
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-
 export const getMotivationTip = async (mode: string, timeLeft: number): Promise<string> => {
   try {
+    // Initialize Gemini AI lazily inside the function.
+    // This prevents the application from crashing on startup if the API key is missing.
+    // The apiKey is injected by Vite at build time via process.env.API_KEY.
+    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+    
     const model = 'gemini-3-flash-preview';
     const minutes = Math.floor(timeLeft / 60);
     
