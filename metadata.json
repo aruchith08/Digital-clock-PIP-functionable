@@ -1,0 +1,5 @@
+{
+  "name": "ZenFocus Clock",
+  "description": "A minimalist focus engine featuring a system clock, Pomodoro timer, and an 'Always-on-Top' Picture-in-Picture mode for distraction-free studying. Includes AI-powered motivation.",
+  "requestFramePermissions": []
+}
