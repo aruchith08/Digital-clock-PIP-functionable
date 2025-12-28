@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Play, Pause, RotateCcw, MonitorUp, Sparkles, Coffee, Brain, Timer } from 'lucide-react';
+import React, { useEffect, useState, useCallback } from 'react';
+import { Play, Pause, RotateCcw, MonitorUp, Sparkles, Coffee, Brain } from 'lucide-react';
 import { TimerMode, TimerState } from '../types';
 import { usePiP } from '../hooks/usePiP';
 import { getMotivationTip } from '../services/geminiService';
@@ -28,7 +28,7 @@ const FocusControls: React.FC = () => {
   const [loadingAi, setLoadingAi] = useState(false);
 
   // Initialize PiP hook
-  const { canvasRef, isPiPActive, togglePiP, draw } = usePiP({ width: 400, height: 400 });
+  const { canvasRef, isPiPActive, togglePiP } = usePiP({ width: 400, height: 400 });
 
   // Timer Logic
   useEffect(() => {
@@ -45,6 +45,59 @@ const FocusControls: React.FC = () => {
 
     return () => clearInterval(interval);
   }, [state.isActive, state.timeLeft]);
+
+  // Drawing Logic
+  const draw = useCallback((mainText: string, subText: string, progress: number, activeColor: string) => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const width = canvas.width;
+    const height = canvas.height;
+
+    // Background
+    ctx.fillStyle = '#0f172a'; // zen-bg
+    ctx.fillRect(0, 0, width, height);
+
+    // Progress Ring Background
+    const centerX = width / 2;
+    const centerY = height / 2;
+    const radius = Math.min(width, height) / 2 - 10;
+    
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+    ctx.strokeStyle = '#1e293b';
+    ctx.lineWidth = 8;
+    ctx.stroke();
+
+    // Progress Ring Active
+    if (progress > 0) {
+      const startAngle = -0.5 * Math.PI;
+      const endAngle = (2 * Math.PI * progress) - 0.5 * Math.PI;
+      
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, radius, startAngle, endAngle, false);
+      ctx.strokeStyle = activeColor;
+      ctx.lineWidth = 8;
+      ctx.lineCap = 'round';
+      ctx.stroke();
+    }
+
+    // Text Main
+    ctx.fillStyle = '#f8fafc';
+    ctx.font = 'bold 80px "JetBrains Mono"';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(mainText, centerX, centerY - 15);
+
+    // Text Sub
+    ctx.fillStyle = '#94a3b8';
+    ctx.font = '500 30px "Inter"';
+    ctx.fillText(subText, centerX, centerY + 40);
+
+  }, []);
 
   // PiP Update Loop
   useEffect(() => {
@@ -194,7 +247,7 @@ const FocusControls: React.FC = () => {
          <div className="mt-4 text-center">
             <span className="text-xs text-green-400/80 uppercase tracking-widest font-semibold flex items-center justify-center gap-2">
               <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-              Mini Clock Active
+              Mini Timer Active
             </span>
          </div>
       )}

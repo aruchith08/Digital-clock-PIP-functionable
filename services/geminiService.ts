@@ -1,18 +1,12 @@
 import { GoogleGenAI } from "@google/genai";
 
-const apiKey = process.env.API_KEY || '';
-
 // Initialize Gemini AI
 // Note: In a real production app, you might want to proxy this through a backend
 // to avoid exposing the key if not using a secure environment variable injection.
 // For this frontend-only demo, we assume the environment is secure or user-provided.
-const ai = new GoogleGenAI({ apiKey });
+const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
 export const getMotivationTip = async (mode: string, timeLeft: number): Promise<string> => {
-  if (!apiKey) {
-    return "Keep pushing! You're doing great. (Add API Key for AI tips)";
-  }
-
   try {
     const model = 'gemini-3-flash-preview';
     const minutes = Math.floor(timeLeft / 60);

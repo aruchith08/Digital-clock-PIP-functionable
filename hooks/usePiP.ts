@@ -1,4 +1,4 @@
-import { useRef, useState, useCallback, useEffect } from 'react';
+import { useRef, useState, useEffect } from 'react';
 
 interface PiPOptions {
   width: number;
@@ -37,55 +37,6 @@ export const usePiP = ({ width, height }: PiPOptions) => {
     };
   }, [width, height]);
 
-  const draw = useCallback((mainText: string, subText: string, progress: number, activeColor: string) => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    // Background
-    ctx.fillStyle = '#0f172a'; // zen-bg
-    ctx.fillRect(0, 0, width, height);
-
-    // Progress Ring Background
-    const centerX = width / 2;
-    const centerY = height / 2;
-    const radius = Math.min(width, height) / 2 - 10;
-    
-    ctx.beginPath();
-    ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
-    ctx.strokeStyle = '#1e293b';
-    ctx.lineWidth = 8;
-    ctx.stroke();
-
-    // Progress Ring Active
-    if (progress > 0) {
-      const startAngle = -0.5 * Math.PI;
-      const endAngle = (2 * Math.PI * progress) - 0.5 * Math.PI;
-      
-      ctx.beginPath();
-      ctx.arc(centerX, centerY, radius, startAngle, endAngle, false);
-      ctx.strokeStyle = activeColor;
-      ctx.lineWidth = 8;
-      ctx.lineCap = 'round';
-      ctx.stroke();
-    }
-
-    // Text Main
-    ctx.fillStyle = '#f8fafc';
-    ctx.font = 'bold 80px "JetBrains Mono"';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText(mainText, centerX, centerY - 15);
-
-    // Text Sub
-    ctx.fillStyle = '#94a3b8';
-    ctx.font = '500 30px "Inter"';
-    ctx.fillText(subText, centerX, centerY + 40);
-
-  }, [width, height]);
-
   const togglePiP = async () => {
     const video = videoRef.current;
     const canvas = canvasRef.current;
@@ -111,5 +62,5 @@ export const usePiP = ({ width, height }: PiPOptions) => {
     }
   };
 
-  return { canvasRef, isPiPActive, togglePiP, draw };
+  return { canvasRef, isPiPActive, togglePiP };
 };
