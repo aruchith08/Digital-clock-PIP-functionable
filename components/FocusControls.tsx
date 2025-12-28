@@ -134,7 +134,7 @@ const FocusControls: React.FC = () => {
   const activeColor = MODES.find(m => m.id === state.mode)?.color;
 
   return (
-    <div className="w-full max-w-2xl bg-zen-surface/50 backdrop-blur-lg rounded-3xl p-8 border border-white/5 shadow-2xl relative overflow-hidden">
+    <div className="w-full max-w-2xl bg-black/40 backdrop-blur-xl rounded-3xl p-4 md:p-8 border border-white/10 shadow-2xl relative overflow-hidden transition-colors mx-4">
        {/* Background Accent Glow */}
        <div 
         className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-current to-transparent opacity-50"
@@ -145,7 +145,7 @@ const FocusControls: React.FC = () => {
       <canvas ref={canvasRef} width={400} height={400} className="hidden" />
 
       {/* Mode Selectors */}
-      <div className="flex justify-center space-x-2 mb-8">
+      <div className="flex flex-wrap justify-center gap-2 mb-6 md:mb-8">
         {MODES.map((m) => {
           const Icon = m.icon;
           const isActive = state.mode === m.id;
@@ -153,7 +153,7 @@ const FocusControls: React.FC = () => {
             <button
               key={m.id}
               onClick={() => switchMode(m.id)}
-              className={`flex items-center space-x-2 px-4 py-2 rounded-full transition-all duration-300 ${
+              className={`flex items-center space-x-2 px-3 py-1.5 md:px-4 md:py-2 rounded-full transition-all duration-300 text-sm md:text-base ${
                 isActive 
                   ? 'bg-white/10 text-white shadow-lg scale-105 ring-1 ring-white/20' 
                   : 'text-zen-muted hover:text-white hover:bg-white/5'
@@ -167,18 +167,19 @@ const FocusControls: React.FC = () => {
       </div>
 
       {/* Main Timer Display */}
-      <div className="text-center mb-8 relative group">
-        <div className="text-[6rem] font-mono font-bold leading-none tracking-tight tabular-nums relative z-10 transition-colors duration-500" style={{ color: activeColor }}>
+      <div className="text-center mb-6 md:mb-8 relative group">
+        <div className="text-6xl sm:text-7xl md:text-[6rem] font-mono font-bold leading-none tracking-tight tabular-nums relative z-10 transition-colors duration-500 drop-shadow-md" style={{ color: activeColor }}>
           {formatTime(state.timeLeft)}
         </div>
         
         {/* Progress Bar (Visual) */}
-        <div className="h-1 w-full bg-zen-bg rounded-full mt-6 overflow-hidden">
+        <div className="h-1 w-full bg-white/5 rounded-full mt-4 md:mt-6 overflow-hidden">
           <div 
-            className="h-full transition-all duration-1000 ease-linear"
+            className="h-full transition-all duration-1000 ease-linear shadow-[0_0_10px_currentColor]"
             style={{ 
               width: `${(state.timeLeft / state.totalTime) * 100}%`,
-              backgroundColor: activeColor
+              backgroundColor: activeColor,
+              color: activeColor
             }}
           />
         </div>
@@ -188,27 +189,30 @@ const FocusControls: React.FC = () => {
       <div className="flex items-center justify-center space-x-6">
         <button
           onClick={toggleTimer}
-          className="group relative flex items-center justify-center w-16 h-16 rounded-2xl bg-white/10 hover:bg-white/20 transition-all active:scale-95 ring-1 ring-white/10"
+          className="group relative flex items-center justify-center w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-white/10 hover:bg-white/20 transition-all active:scale-95 ring-1 ring-white/10 shadow-lg"
+          aria-label={state.isActive ? "Pause Timer" : "Start Timer"}
         >
-          {state.isActive ? <Pause size={32} className="fill-current" /> : <Play size={32} className="fill-current ml-1" />}
+          {state.isActive ? <Pause size={28} className="fill-current text-white md:w-8 md:h-8" /> : <Play size={28} className="fill-current ml-1 text-white md:w-8 md:h-8" />}
         </button>
 
         <button
           onClick={resetTimer}
-          className="p-4 rounded-xl text-zen-muted hover:text-white hover:bg-white/5 transition-all"
+          className="p-3 md:p-4 rounded-xl text-zen-muted hover:text-white hover:bg-white/5 transition-all"
           title="Reset Timer"
+          aria-label="Reset Timer"
         >
-          <RotateCcw size={24} />
+          <RotateCcw size={20} className="md:w-6 md:h-6" />
         </button>
 
         <button
           onClick={togglePiP}
-          className={`p-4 rounded-xl transition-all border border-white/5 ${
+          className={`p-3 md:p-4 rounded-xl transition-all border border-white/5 ${
             isPiPActive ? 'text-green-400 bg-green-400/10' : 'text-zen-muted hover:text-white hover:bg-white/5'
           }`}
           title="Toggle Picture-in-Picture Mode"
+          aria-label="Toggle Mini Timer"
         >
-          <MonitorUp size={24} />
+          <MonitorUp size={20} className="md:w-6 md:h-6" />
         </button>
       </div>
       

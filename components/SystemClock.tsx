@@ -47,24 +47,26 @@ const SystemClock: React.FC = () => {
   }, [time, hours, minutes, seconds]);
 
   return (
-    <div className="flex flex-col items-center justify-center space-y-2 mb-12 relative group">
+    <div className="flex flex-col items-center justify-center space-y-2 mb-8 md:mb-12 relative group w-full">
       
       {/* Hidden Canvas for PiP */}
       <canvas ref={canvasRef} width={300} height={150} className="hidden" />
 
-      <div className="text-[12rem] leading-none font-bold font-mono tracking-tighter text-zen-text drop-shadow-2xl select-none tabular-nums flex">
+      {/* Main Clock - Responsive Font Size */}
+      <div className="text-6xl sm:text-8xl md:text-[10rem] lg:text-[12rem] leading-none font-bold font-mono tracking-tighter text-zen-text drop-shadow-2xl select-none tabular-nums flex items-baseline justify-center">
         <span>{hours}</span>
-        <span className="animate-pulse text-zen-muted">:</span>
+        <span className="animate-pulse text-zen-muted mx-1 md:mx-4">:</span>
         <span>{minutes}</span>
       </div>
-      <div className="flex items-center space-x-4">
-         <span className="text-2xl text-zen-muted font-light tracking-widest uppercase">{dateStr}</span>
-         <span className="text-xl text-zen-highlight font-mono bg-zen-surface px-3 py-1 rounded-md">{seconds}s</span>
+
+      <div className="flex flex-wrap justify-center items-center gap-3 md:gap-4 px-4 text-center">
+         <span className="text-sm sm:text-xl md:text-2xl text-zen-muted font-light tracking-widest uppercase">{dateStr}</span>
+         <span className="text-sm sm:text-lg md:text-xl text-zen-highlight font-mono bg-zen-surface px-2 py-0.5 md:px-3 md:py-1 rounded-md">{seconds}s</span>
          
          <button
           onClick={togglePiP}
-          className={`p-2 rounded-lg transition-all ml-4 opacity-0 group-hover:opacity-100 focus:opacity-100 ${
-            isPiPActive ? 'text-green-400 bg-green-400/10 opacity-100' : 'text-zen-muted hover:text-white hover:bg-white/5'
+          className={`p-2 rounded-lg transition-all md:opacity-0 md:group-hover:opacity-100 focus:opacity-100 ${
+            isPiPActive ? 'text-green-400 bg-green-400/10 opacity-100' : 'text-zen-muted hover:text-white hover:bg-white/5 opacity-100'
           }`}
           title="Pop out Clock"
           aria-label="Toggle Picture-in-Picture Clock"
