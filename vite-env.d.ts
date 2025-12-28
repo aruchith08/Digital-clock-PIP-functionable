@@ -1,2 +1,6 @@
-// Reference removed to fix "Cannot find type definition file for 'vite/client'" error.
-export {};
+declare const process: {
+  env: {
+    API_KEY: string;
+    [key: string]: string | undefined;
+  }
+};
