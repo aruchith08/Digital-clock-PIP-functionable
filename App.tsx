@@ -24,7 +24,7 @@ const App: React.FC = () => {
       {/* Footer Info */}
       <footer className="absolute bottom-6 text-zen-muted text-xs font-mono text-center w-full opacity-40">
         <p>Use the PiP button to keep the timer visible while you study.</p>
-        <p className="mt-1">Built with React & Gemini</p>
+        <p className="mt-1">Built with React</p>
       </footer>
     </div>
   );

@@ -11,7 +11,3 @@ export interface TimerState {
   mode: TimerMode;
   totalTime: number; // For progress calculation
 }
-
-export interface MotivationResponse {
-  tip: string;
-}

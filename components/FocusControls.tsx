@@ -1,8 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { Play, Pause, RotateCcw, MonitorUp, Sparkles, Coffee, Brain } from 'lucide-react';
+import { Play, Pause, RotateCcw, MonitorUp, Coffee, Brain } from 'lucide-react';
 import { TimerMode, TimerState } from '../types';
 import { usePiP } from '../hooks/usePiP';
-import { getMotivationTip } from '../services/geminiService';
 
 const formatTime = (seconds: number) => {
   const m = Math.floor(seconds / 60).toString().padStart(2, '0');
@@ -23,9 +22,6 @@ const FocusControls: React.FC = () => {
     mode: TimerMode.POMODORO,
     totalTime: 25 * 60,
   });
-
-  const [motivation, setMotivation] = useState<string>("");
-  const [loadingAi, setLoadingAi] = useState(false);
 
   // Initialize PiP hook
   const { canvasRef, isPiPActive, togglePiP } = usePiP({ width: 400, height: 400 });
@@ -119,7 +115,6 @@ const FocusControls: React.FC = () => {
         totalTime: config.minutes * 60,
         isActive: false,
       });
-      setMotivation(""); // Clear motivation on mode switch
     }
   };
 
@@ -134,13 +129,6 @@ const FocusControls: React.FC = () => {
         isActive: false,
       }));
     }
-  };
-
-  const fetchMotivation = async () => {
-    setLoadingAi(true);
-    const tip = await getMotivationTip(state.mode, state.timeLeft);
-    setMotivation(tip);
-    setLoadingAi(false);
   };
 
   const activeColor = MODES.find(m => m.id === state.mode)?.color;
@@ -222,25 +210,7 @@ const FocusControls: React.FC = () => {
         >
           <MonitorUp size={24} />
         </button>
-        
-         <button
-          onClick={fetchMotivation}
-          disabled={loadingAi}
-          className={`p-4 rounded-xl transition-all border border-white/5 ${
-            loadingAi ? 'animate-pulse text-yellow-400' : 'text-zen-muted hover:text-yellow-300 hover:bg-yellow-400/10'
-          }`}
-          title="Get AI Motivation"
-        >
-          <Sparkles size={24} />
-        </button>
       </div>
-      
-      {/* Motivation Section */}
-      {motivation && (
-        <div className="mt-8 text-center animate-fade-in px-4 py-3 bg-white/5 rounded-lg border border-white/5">
-            <p className="text-zen-highlight italic font-light">"{motivation}"</p>
-        </div>
-      )}
       
       {/* PiP Instructions if active */}
       {isPiPActive && (
