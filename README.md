@@ -1,5 +1,7 @@
 # 🕰️ ZenFocus Clock
 
+<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/e0ba9217-6cdf-49c2-9424-6b8383e10298" />
+
 A minimalist, aesthetic focus dashboard designed to keep you in the flow.
 
 ZenFocus combines a beautiful system clock, a versatile Pomodoro timer, and high-quality nature ambiances into a single distraction-free interface. It features a unique **Picture-in-Picture (PiP)** mode that allows you to keep your timer visible "always-on-top" while you work in other windows or applications.
