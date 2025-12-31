@@ -4,6 +4,27 @@ import FocusControls from './components/FocusControls';
 import { useWallpaper } from './hooks/useWallpaper';
 import { Image as ImageIcon } from 'lucide-react';
 
+const ZenLogo = () => (
+  <svg viewBox="0 0 100 100" className="w-8 h-8 rounded-lg shadow-lg shadow-cyan-500/20" aria-label="ZenFocus Logo">
+    <defs>
+      <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#38bdf8" />
+        <stop offset="100%" stopColor="#2563eb" />
+      </linearGradient>
+    </defs>
+    <rect width="100" height="100" rx="25" fill="url(#logoGradient)" />
+    {/* Stopwatch Ring */}
+    <circle cx="50" cy="55" r="30" stroke="white" strokeWidth="6" fill="none" />
+    {/* Stopwatch Top Button */}
+    <rect x="45" y="14" width="10" height="8" fill="white" />
+    <rect x="47" y="8" width="6" height="6" fill="white" />
+    {/* Diagonal Ticker */}
+    <path d="M72 22 L78 28" stroke="white" strokeWidth="6" strokeLinecap="round" />
+    {/* Hourglass Inside */}
+    <path d="M50 55 L40 45 H60 L50 55 Z M50 55 L40 65 H60 L50 55 Z" fill="white" />
+  </svg>
+);
+
 const App: React.FC = () => {
   const { wallpaper, nextWallpaper } = useWallpaper();
 
@@ -29,8 +50,8 @@ const App: React.FC = () => {
 
       {/* Header / Brand & Controls */}
       <header className="relative w-full max-w-4xl mx-auto flex justify-between items-center py-4 z-10 mb-8 sm:mb-0">
-        <div className="flex items-center gap-3 opacity-80 hover:opacity-100 transition-opacity">
-          <div className="w-3 h-3 bg-zen-highlight rounded-full shadow-[0_0_12px_rgba(56,189,248,0.8)]" />
+        <div className="flex items-center gap-3 opacity-80 hover:opacity-100 transition-opacity cursor-default">
+          <ZenLogo />
           <h1 className="font-sans font-bold tracking-widest text-sm uppercase text-white drop-shadow-md">ZenFocus</h1>
         </div>
 
