@@ -54,7 +54,9 @@ const App: React.FC = () => {
       {/* Footer Info */}
       <footer className="relative z-10 w-full text-zen-muted text-xs font-mono text-center opacity-60 mix-blend-screen py-8 mt-4">
         <p>Use the PiP button to keep the timer visible while you study.</p>
-        <p className="mt-1">Built with React</p>
+        <p className="mt-1">
+          Built with React by <a href="https://github.com/aruchith08" target="_blank" rel="noopener noreferrer" className="hover:text-white underline decoration-white/30 hover:decoration-white transition-all">A.Ruchith</a>
+        </p>
       </footer>
     </div>
   );

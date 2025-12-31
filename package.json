@@ -3,6 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
+  "author": "A.Ruchith <https://github.com/aruchith08>",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
